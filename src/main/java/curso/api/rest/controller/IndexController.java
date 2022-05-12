@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -52,5 +53,11 @@ public class IndexController {
     public ResponseEntity<Usuario> atualizar(@RequestBody Usuario usuario) {
         Usuario usuarioSalvo = usuarioRepository.save(usuario);
         return new ResponseEntity<Usuario>(usuarioSalvo, HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/{id}", produces = "application/text")
+    public String delete(@PathVariable(value = "id") Long id) {
+        usuarioRepository.deleteById(id);
+        return "OK";
     }
 }
