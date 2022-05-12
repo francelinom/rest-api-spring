@@ -1,6 +1,6 @@
 package curso.api.rest.model;
 
-import net.minidev.json.annotate.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.ForeignKey;
 
 import javax.persistence.Entity;
