@@ -1,5 +1,6 @@
 package curso.api.rest.model;
 
+import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.annotations.ForeignKey;
 
 import javax.persistence.Entity;
@@ -16,6 +17,7 @@ public class Telefone {
 
     private String numero;
 
+    @JsonIgnore
     @ForeignKey(name = "usuario_id")
     @ManyToOne
     private Usuario usuario;
