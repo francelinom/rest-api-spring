@@ -42,10 +42,10 @@ public class Usuario implements UserDetails {
     @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "usuarios_role", uniqueConstraints = @UniqueConstraint(
             columnNames = {"usuario_id", "role_id"}, name = "unique_role_user"),
-            joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id", table = "usuario",
+            joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id", table = "usuario", unique = false,
                     foreignKey = @ForeignKey(name = "usuario_fk", value = ConstraintMode.CONSTRAINT)),
 
-            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id", table = "role",
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id", table = "role", unique = false, updatable = false,
                     foreignKey = @ForeignKey(name = "role_fk", value = ConstraintMode.CONSTRAINT)))
     private List<Role> roles;
 
