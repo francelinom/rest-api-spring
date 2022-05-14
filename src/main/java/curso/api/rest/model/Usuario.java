@@ -36,15 +36,17 @@ public class Usuario implements UserDetails {
 
     private String nome;
 
-    @OneToMany(mappedBy = "usuario", orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "usuario", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Telefone> telefones = new ArrayList<Telefone>();
 
     @OneToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "usuarios_role",uniqueConstraints = @UniqueConstraint(
+    @JoinTable(name = "usuarios_role", uniqueConstraints = @UniqueConstraint(
             columnNames = {"usuario_id", "role_id"}, name = "unique_role_user"),
             joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id", table = "usuario",
-    foreignKey = @ForeignKey(name = "usuario_fk", value = ConstraintMode.CONSTRAINT)),
-    inverseJoinColumns = @JoinColumn)
+                    foreignKey = @ForeignKey(name = "usuario_fk", value = ConstraintMode.CONSTRAINT)),
+
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id", table = "role",
+                    foreignKey = @ForeignKey(name = "role_fk", value = ConstraintMode.CONSTRAINT)))
     private List<Role> roles;
 
     public Long getId() {
@@ -102,7 +104,7 @@ public class Usuario implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return roles;
     }
 
     @Override
