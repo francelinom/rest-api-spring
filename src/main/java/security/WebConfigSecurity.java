@@ -1,6 +1,6 @@
-package curso.api.rest.security;
+package security;
 
-import curso.api.rest.service.ImplementacaoUserDetailsService;
+import service.ImplementacaoUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;

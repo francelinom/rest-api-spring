@@ -1,4 +1,4 @@
-package curso.api.rest.model;
+package model;
 
 import org.springframework.security.core.GrantedAuthority;
 
