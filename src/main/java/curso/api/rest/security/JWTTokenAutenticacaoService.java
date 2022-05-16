@@ -1,17 +1,18 @@
-package security;
+package curso.api.rest.security;
 
 import curso.api.rest.ApplicationContextLoad;
+import curso.api.rest.model.Usuario;
+import curso.api.rest.repository.UsuarioRepository;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import model.Usuario;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import repository.UsuarioRepository;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Date;
 
 @Service
@@ -26,7 +27,7 @@ public class JWTTokenAutenticacaoService {
     /*
     Gerando token de autenticado e adicionando ao cabeçalho e reposta Http
      */
-    public void addAuthentication(HttpServletResponse response, String username) throws Exception {
+    public void addAuthentication(HttpServletResponse response, String username) throws IOException {
         /*
         Montagem do token
          */

@@ -1,6 +1,6 @@
-package repository;
+package curso.api.rest.repository;
 
-import model.Usuario;
+import curso.api.rest.model.Usuario;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

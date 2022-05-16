@@ -1,4 +1,4 @@
-package model;
+package curso.api.rest.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.ForeignKey;
