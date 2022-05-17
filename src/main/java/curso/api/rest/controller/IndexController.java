@@ -1,6 +1,7 @@
 package curso.api.rest.controller;
 
 import curso.api.rest.model.Usuario;
+import curso.api.rest.model.UsuarioDTO;
 import curso.api.rest.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -39,9 +40,9 @@ public class IndexController {
     @GetMapping(value = "/{id}", produces = "application/json")
     @CacheEvict(value = "cacheuser", allEntries = true)
     @CachePut("cacheuser")
-    public ResponseEntity<Usuario> init(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<UsuarioDTO> init(@PathVariable(value = "id") Long id) {
         Optional<Usuario> usuario = usuarioRepository.findById(id);
-        return new ResponseEntity<Usuario>(usuario.get(), HttpStatus.OK);
+        return new ResponseEntity<UsuarioDTO>(new UsuarioDTO(usuario.get()), HttpStatus.OK);
     }
 
     @GetMapping(value = "/", produces = "application/json")
