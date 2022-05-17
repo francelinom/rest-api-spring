@@ -3,6 +3,8 @@ package curso.api.rest.controller;
 import curso.api.rest.model.Usuario;
 import curso.api.rest.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,14 +37,16 @@ public class IndexController {
         return new ResponseEntity<Usuario>(usuario.get(), HttpStatus.OK);
     }
     @GetMapping(value = "/{id}", produces = "application/json")
-    @Cacheable("cacheuser")
+    @CacheEvict(value = "cacheuser", allEntries = true)
+    @CachePut("cacheuser")
     public ResponseEntity<Usuario> init(@PathVariable(value = "id") Long id) {
         Optional<Usuario> usuario = usuarioRepository.findById(id);
         return new ResponseEntity<Usuario>(usuario.get(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/", produces = "application/json")
-    @Cacheable("cacheusuarios")
+    @CacheEvict(value = "cacheusuarios", allEntries = true)
+    @CachePut("cacheusuarios")
     public ResponseEntity<List<Usuario>> usuario() {
         List<Usuario> list = (List<Usuario>) usuarioRepository.findAll();
 
