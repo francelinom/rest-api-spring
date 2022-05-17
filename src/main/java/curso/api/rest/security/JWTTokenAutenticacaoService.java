@@ -40,6 +40,8 @@ public class JWTTokenAutenticacaoService {
 
         response.addHeader(HEADER_STRING, token);
 
+        liberacaoCors(response);
+
         response.getWriter().write("{\"Authorization\": \""+token+"\"}");
 
     }
@@ -47,7 +49,7 @@ public class JWTTokenAutenticacaoService {
     /*
     Retorna usuário autenticado ou null
      */
-    public Authentication getAuthentication(HttpServletRequest request) {
+    public Authentication getAuthentication(HttpServletRequest request, HttpServletResponse response) {
         String token = request.getHeader(HEADER_STRING);
         String tokenLimpo = token.replace(TOKEN_PREFIX, "").trim();
 
@@ -71,6 +73,25 @@ public class JWTTokenAutenticacaoService {
                 }
             }
         }
+        liberacaoCors(response);
         return null;
+    }
+
+    private void liberacaoCors(HttpServletResponse response) {
+        if (response.getHeader("Access-Control-Allow-Origin") == null) {
+            response.addHeader("Access-Control-Allow-Origin", "*");
+        }
+
+        if (response.getHeader("Access-Control-Allow-Headers") == null) {
+            response.addHeader("Access-Control-Allow-Headers", "*");
+        }
+
+        if (response.getHeader("Access-Control-Request-Headers") == null) {
+            response.addHeader("Access-Control-Request-Headers", "*");
+        }
+
+        if (response.getHeader("Access-Control-Allow-Methods") == null) {
+            response.addHeader("Access-Control-Allow-Methods", "*");
+        }
     }
 }
