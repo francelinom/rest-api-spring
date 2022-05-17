@@ -53,26 +53,33 @@ public class JWTTokenAutenticacaoService {
         String token = request.getHeader(HEADER_STRING);
         String tokenLimpo = token.replace(TOKEN_PREFIX, "").trim();
 
-        if (token != null) {
-            String user = Jwts.parser()
-                    .setSigningKey(SECRET)
-                    .parseClaimsJws(tokenLimpo)
-                    .getBody().getSubject();
-            if (user != null) {
-                Usuario usuario = ApplicationContextLoad.getApplicationContext()
-                        .getBean(UsuarioRepository.class).findUserByLogin(user);
+        try {
+            if (token != null) {
+                String user = Jwts.parser()
+                        .setSigningKey(SECRET)
+                        .parseClaimsJws(tokenLimpo)
+                        .getBody().getSubject();
+                if (user != null) {
+                    Usuario usuario = ApplicationContextLoad.getApplicationContext()
+                            .getBean(UsuarioRepository.class).findUserByLogin(user);
 
-                if (usuario != null) {
-                    if (tokenLimpo.equalsIgnoreCase(usuario.getToken())) {
-                        return new UsernamePasswordAuthenticationToken(
-                                usuario.getUsername(),
-                                usuario.getPassword(),
-                                usuario.getAuthorities()
-                        );
+                    if (usuario != null) {
+                        if (tokenLimpo.equalsIgnoreCase(usuario.getToken())) {
+                            return new UsernamePasswordAuthenticationToken(
+                                    usuario.getUsername(),
+                                    usuario.getPassword(),
+                                    usuario.getAuthorities()
+                            );
+                        }
                     }
                 }
             }
+        } catch (io.jsonwebtoken.ExpiredJwtException e) {
+            try {
+                response.getOutputStream().println("Seu token está expirado, faça o login ou informe um novo token.");
+            } catch (IOException ex) { }
         }
+
         liberacaoCors(response);
         return null;
     }
