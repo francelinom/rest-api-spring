@@ -40,6 +40,9 @@ public class JWTTokenAutenticacaoService {
 
         response.addHeader(HEADER_STRING, token);
 
+        ApplicationContextLoad.getApplicationContext()
+                .getBean(UsuarioRepository.class).atualizaTokenUser(JWT, username);
+
         liberacaoCors(response);
 
         response.getWriter().write("{\"Authorization\": \""+token+"\"}");
