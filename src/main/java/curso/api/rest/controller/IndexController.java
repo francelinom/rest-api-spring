@@ -3,6 +3,7 @@ package curso.api.rest.controller;
 import curso.api.rest.model.Usuario;
 import curso.api.rest.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -34,12 +35,14 @@ public class IndexController {
         return new ResponseEntity<Usuario>(usuario.get(), HttpStatus.OK);
     }
     @GetMapping(value = "/{id}", produces = "application/json")
+    @Cacheable("cacheuser")
     public ResponseEntity<Usuario> init(@PathVariable(value = "id") Long id) {
         Optional<Usuario> usuario = usuarioRepository.findById(id);
         return new ResponseEntity<Usuario>(usuario.get(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/", produces = "application/json")
+    @Cacheable("cacheusuarios")
     public ResponseEntity<List<Usuario>> usuario() {
         List<Usuario> list = (List<Usuario>) usuarioRepository.findAll();
 
