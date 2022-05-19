@@ -60,6 +60,13 @@ public class IndexController {
 
         return new ResponseEntity<List<Usuario>>(list, HttpStatus.OK);
     }
+
+    @GetMapping(value = "/usuarioPorNome/{nome}", produces = "application/json")
+    public ResponseEntity<List<Usuario>> usuarioPorNome(@PathVariable("nome") String nome) throws InterruptedException{
+        List<Usuario> list = (List<Usuario>) usuarioRepository.findUserByNome(nome);
+
+        return new ResponseEntity<List<Usuario>>(list, HttpStatus.OK);
+    }
     @PostMapping(value = "/", produces = "application/json")
     public ResponseEntity<Usuario> cadastrar(@RequestBody Usuario usuario) throws Exception {
         for (int pos = 0; pos < usuario.getTelefones().size(); pos++) {
