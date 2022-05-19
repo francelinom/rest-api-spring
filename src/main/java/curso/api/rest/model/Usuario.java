@@ -49,7 +49,7 @@ public class Usuario implements UserDetails {
 
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id", table = "role", unique = false, updatable = false,
                     foreignKey = @ForeignKey(name = "role_fk", value = ConstraintMode.CONSTRAINT)))
-    private List<Role> roles;
+    private List<Role> roles = new ArrayList<Role>();
 
     private String token = "";
 
