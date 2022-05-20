@@ -1,42 +1,63 @@
 package curso.api.rest.model;
 
+import javax.persistence.Column;
 import java.io.Serializable;
 
 public class UsuarioDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private String userLogin;
-    private String userNome;
-    private String userCpf;
+    private Long id;
+    private String login;
+    private String senha;
+    private String nome;
+    private String cpf;
 
     public UsuarioDTO(Usuario usuario) {
-        this.userLogin = usuario.getLogin();
-        this.userNome = usuario.getNome();
-        this.userCpf = usuario.getCpf();
+        this.id = usuario.getId();
+        this.login = usuario.getLogin();
+        this.senha = usuario.getSenha();
+        this.nome = usuario.getNome();
+        this.cpf = usuario.getCpf();
     }
 
-    public String getUserLogin() {
-        return userLogin;
+    public Long getId() {
+        return id;
     }
 
-    public void setUserLogin(String userLogin) {
-        this.userLogin = userLogin;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getUserNome() {
-        return userNome;
+    public String getLogin() {
+        return login;
     }
 
-    public void setUserNome(String userNome) {
-        this.userNome = userNome;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
-    public String getUserCpf() {
-        return userCpf;
+    public String getSenha() {
+        return senha;
     }
 
-    public void setUserCpf(String userCpf) {
-        this.userCpf = userCpf;
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 }
