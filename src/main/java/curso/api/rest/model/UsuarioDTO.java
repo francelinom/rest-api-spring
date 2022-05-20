@@ -12,6 +12,7 @@ public class UsuarioDTO implements Serializable {
     private String senha;
     private String nome;
     private String cpf;
+    private String cep;
 
     public UsuarioDTO(Usuario usuario) {
         this.id = usuario.getId();
@@ -19,6 +20,7 @@ public class UsuarioDTO implements Serializable {
         this.senha = usuario.getSenha();
         this.nome = usuario.getNome();
         this.cpf = usuario.getCpf();
+        this.cep = usuario.getCep();
     }
 
     public Long getId() {
@@ -59,5 +61,13 @@ public class UsuarioDTO implements Serializable {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
     }
 }
