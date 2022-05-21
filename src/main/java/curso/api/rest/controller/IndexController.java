@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import curso.api.rest.model.Usuario;
 import curso.api.rest.model.UsuarioDTO;
 import curso.api.rest.repository.UsuarioRepository;
+import curso.api.rest.service.ImplementacaoUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -37,6 +38,9 @@ public class IndexController {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private ImplementacaoUserDetailsService implementacaoUserDetailsService;
 
     @GetMapping(value = "/{id}/codigo/{venda}", produces = "application/json")
     public ResponseEntity<Usuario> init(@PathVariable(value = "id") Long id,
@@ -98,6 +102,7 @@ public class IndexController {
         String senhacriptografada = new BCryptPasswordEncoder().encode(usuario.getSenha());
         usuario.setSenha(senhacriptografada);
         Usuario usuarioSalvo = usuarioRepository.save(usuario);
+        implementacaoUserDetailsService.insereAcessoPadrao(usuarioSalvo.getId());
         return new ResponseEntity<Usuario>(usuarioSalvo, HttpStatus.OK);
     }
 
