@@ -3,6 +3,7 @@ package curso.api.rest.controller;
 import com.google.gson.Gson;
 import curso.api.rest.model.Usuario;
 import curso.api.rest.model.UsuarioDTO;
+import curso.api.rest.repository.TelefoneRepository;
 import curso.api.rest.repository.UsuarioRepository;
 import curso.api.rest.service.ImplementacaoUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,9 @@ public class IndexController {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private TelefoneRepository telefoneRepository;
 
     @Autowired
     private ImplementacaoUserDetailsService implementacaoUserDetailsService;
@@ -127,5 +131,12 @@ public class IndexController {
     public String delete(@PathVariable(value = "id") Long id) {
         usuarioRepository.deleteById(id);
         return "OK";
+    }
+
+    @DeleteMapping(value = "/removerTelefone/{id}", produces = "application/text")
+    public String deleteTelefone(@PathVariable("id") Long id) {
+        telefoneRepository.deleteById(id);
+
+        return "ok";
     }
 }
