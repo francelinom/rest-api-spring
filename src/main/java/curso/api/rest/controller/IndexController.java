@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -63,10 +66,12 @@ public class IndexController {
     @GetMapping(value = "/", produces = "application/json")
     @CacheEvict(value = "cacheusuarios", allEntries = true)
     @CachePut("cacheusuarios")
-    public ResponseEntity<List<Usuario>> usuario() {
-        List<Usuario> list = (List<Usuario>) usuarioRepository.findAll();
+    public ResponseEntity<Page<Usuario>> usuario() {
+        PageRequest page = PageRequest.of(0, 5, Sort.by("nome"));
+        Page<Usuario> list = usuarioRepository.findAll(page);
+//        List<Usuario> list = (List<Usuario>) usuarioRepository.findAll();
 
-        return new ResponseEntity<List<Usuario>>(list, HttpStatus.OK);
+        return new ResponseEntity<Page<Usuario>>(list, HttpStatus.OK);
     }
 
     @GetMapping(value = "/usuarioPorNome/{nome}", produces = "application/json")
