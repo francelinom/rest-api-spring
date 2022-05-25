@@ -87,10 +87,15 @@ public class IndexController {
     @GetMapping(value = "/usuarioPorNome/{nome}", produces = "application/json")
     public ResponseEntity<Page<Usuario>> usuarioPorNome(@PathVariable("nome") String nome) throws InterruptedException{
         PageRequest pageRequest = null;
-        if (nome == null || (nome != null && nome.trim().isEmpty())) {
+        Page<Usuario> list = null;
+        if (nome == null || (nome != null && nome.trim().isEmpty()) || nome.equalsIgnoreCase("undefined")) {
             pageRequest = PageRequest.of(0, 5, Sort.by("nome"));
+            list = usuarioRepository.findAll(pageRequest);
+        } else {
+            pageRequest = PageRequest.of(0, 5, Sort.by("nome"));
+            list = usuarioRepository.findUserByNomePage(nome, pageRequest);
         }
-        Page<Usuario> list = usuarioRepository.findAll(pageRequest);
+
 
         return new ResponseEntity<Page<Usuario>>(list, HttpStatus.OK);
     }
