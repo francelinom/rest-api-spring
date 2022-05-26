@@ -99,6 +99,23 @@ public class IndexController {
 
         return new ResponseEntity<Page<Usuario>>(list, HttpStatus.OK);
     }
+
+    @GetMapping(value = "/usuarioPorNome/{nome}/page/{page}", produces = "application/json")
+    public ResponseEntity<Page<Usuario>> usuarioPorNomePage(@PathVariable("nome") String nome, @PathVariable("page") int page) throws InterruptedException{
+        PageRequest pageRequest = null;
+        Page<Usuario> list = null;
+        if (nome == null || (nome != null && nome.trim().isEmpty()) || nome.equalsIgnoreCase("undefined")) {
+            pageRequest = PageRequest.of(page, 5, Sort.by("nome"));
+            list = usuarioRepository.findAll(pageRequest);
+        } else {
+            pageRequest = PageRequest.of(page, 5, Sort.by("nome"));
+            list = usuarioRepository.findUserByNomePage(nome, pageRequest);
+        }
+
+
+        return new ResponseEntity<Page<Usuario>>(list, HttpStatus.OK);
+    }
+
     @PostMapping(value = "/", produces = "application/json")
     public ResponseEntity<Usuario> cadastrar(@RequestBody Usuario usuario) throws Exception {
         for (int pos = 0; pos < usuario.getTelefones().size(); pos++) {
